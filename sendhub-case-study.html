@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="night">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SendHub.ai Case Study - Gabe Lalasava</title>
+  <meta name="description" content="Case study: Building SendHub.ai - an AI-powered WhatsApp messaging platform on Supabase + Cloudflare Workers with AI-augmented development.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%2322c55e'/><stop offset='100%25' stop-color='%237c6cf0'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='%230c0e1a'/><text x='50' y='70' font-size='60' font-weight='bold' font-family='system-ui' text-anchor='middle' fill='url(%23g)'>G</text></svg>">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.23/dist/full.min.css" rel="stylesheet" type="text/css" />
+  <style>
+    [data-theme="night"] {
+      --b1: #0c0e1a;
+      --b2: #111425;
+      --b3: #171b2e;
+      --bc: #e2e4ed;
+      --p: #7c6cf0;
+      --pc: #ffffff;
+      --s: #22c55e;
+      --sc: #0c0e1a;
+      --a: #38bdf8;
+      --ac: #0c0e1a;
+      --n: #1e2235;
+      --nc: #b0b4c5;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: linear-gradient(180deg, #0c0e1a 0%, #0f1020 50%, #130e20 100%); color: #e2e4ed !important; }
+    h1, h2, h3, h4, h5, h6, p, li, span, a, div, td, th, label { color: inherit; }
+    .card-title, .navbar, .menu a, .btn { color: inherit; }
+    .bg-base-200 { background: rgba(255,255,255,0.02) !important; }
+    .gradient-text {
+      background: linear-gradient(135deg, #22c55e 0%, #38bdf8 40%, #7c6cf0 100%) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      background-clip: text !important;
+      color: transparent !important;
+    }
+    .arch-box { transition: all 0.2s ease; }
+    .arch-box:hover { border-color: #7c6cf0; transform: translateY(-2px); }
+    .flow-arrow { color: #22c55e; font-size: 1.5rem; line-height: 1; }
+  </style>
+</head>
+<body class="bg-base-100 text-base-content">
+
+<!-- NAV -->
+<div class="navbar bg-base-100/80 backdrop-blur-xl fixed top-0 z-50 border-b border-base-content/5 px-4 lg:px-8">
+  <div class="navbar-start">
+    <a href="index.html" class="text-xl font-bold tracking-tight">gabe<span class="text-primary">.</span>dev</a>
+  </div>
+  <div class="navbar-end">
+    <a href="index.html" class="btn btn-ghost btn-sm">&larr; Back to Portfolio</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="pt-32 pb-16 lg:pb-24">
+  <div class="max-w-4xl mx-auto px-6 lg:px-8">
+    <span class="badge badge-primary badge-outline py-3 px-4 text-xs tracking-widest uppercase font-semibold mb-6">Case Study</span>
+    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
+      SendHub<span class="text-primary">.ai</span>
+    </h1>
+    <p class="text-xl opacity-60 max-w-2xl leading-relaxed mb-8">
+      Building an AI-powered WhatsApp messaging platform from zero to production using Supabase, Cloudflare Workers, and Claude Code for AI-augmented development.
+    </p>
+    <div class="flex flex-wrap gap-3">
+      <a href="https://sendhub.ai" target="_blank" class="btn btn-primary btn-sm">Visit sendhub.ai &rarr;</a>
+      <a href="https://app.sendhub.ai" target="_blank" class="btn btn-outline btn-sm">Dashboard &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section class="py-16 bg-base-200">
+  <div class="max-w-4xl mx-auto px-6 lg:px-8">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+      <div class="card bg-base-100 border border-base-content/5 p-5 text-center">
+        <div class="text-3xl font-extrabold gradient-text">6</div>
+        <div class="text-xs opacity-50 mt-1 uppercase tracking-wider">Deployed Services</div>
+      </div>
+      <div class="card bg-base-100 border border-base-content/5 p-5 text-center">
+        <div class="text-3xl font-extrabold gradient-text">30+</div>
+        <div class="text-xs opacity-50 mt-1 uppercase tracking-wider">DB Tables</div>
+      </div>
+      <div class="card bg-base-100 border border-base-content/5 p-5 text-center">
+        <div class="text-3xl font-extrabold gradient-text">3</div>
+        <div class="text-xs opacity-50 mt-1 uppercase tracking-wider">AI Providers</div>
+      </div>
+      <div class="card bg-base-100 border border-base-content/5 p-5 text-center">
+        <div class="text-3xl font-extrabold gradient-text">5</div>
+        <div class="text-xs opacity-50 mt-1 uppercase tracking-wider">Integrations</div>
+      </div>
+    </div>
+
+    <h2 class="text-2xl font-bold mb-4">What is SendHub.ai?</h2>
+    <p class="opacity-60 leading-relaxed mb-4">SendHub.ai is a multi-tenant SaaS platform that gives businesses AI-powered WhatsApp messaging with a unified inbox, intelligent auto-replies, team collaboration, and e-commerce integrations. It supports both WhatsApp Business API (cloud-hosted) and personal WhatsApp accounts via a Matrix bridge.</p>
+    <p class="opacity-60 leading-relaxed">The platform includes an embeddable web chat widget, a knowledge base with semantic search, Shopify product/order integration, scheduled messaging, and an MCP server for AI agent access.</p>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section class="py-16 lg:py-24">
+  <div class="max-w-4xl mx-auto px-6 lg:px-8">
+    <p class="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-4">Architecture</p>
+    <h2 class="text-3xl font-bold tracking-tight mb-8">System Design</h2>
+
+    <!-- Architecture Diagram -->
+    <div class="card bg-base-200 border border-base-content/5 p-6 lg:p-8 mb-8">
+      <pre class="text-sm text-primary/80 overflow-x-auto leading-relaxed font-mono"><code>Customer (WhatsApp / Web Chat / Email)
+        |
+        v
+  +--------------------------+
+  |   api.sendhub.ai         |    Cloudflare Worker (Hono)
+  |   Webhook + REST API     |    Rate limiting, CORS, Auth
+  +-----------+--------------+
+              |
+              v
+  +--------------------------+
+  |   Supabase (SSOT)        |    PostgreSQL + pgvector
+  |   Auth, RLS, Realtime    |    Row-Level Security
+  |   Storage, PostgREST     |    Auto-generated API
+  +-----------+--------------+
+         |         |         |
+         v         v         v
+  +----------+ +--------+ +----------------+
+  | Dashboard | |ai-worker| | matrix-socket  |
+  | React SPA | |AI reply | | Personal WA    |
+  | Realtime  | |Gemini   | | Matrix bridge  |
+  +----------+ +----+---+ +----------------+
+                     |
+                     v
+            WA Cloud API / Matrix
+                     |
+                     v
+              Customer receives</code></pre>
+    </div>
+
+    <!-- Key Principle -->
+    <div class="alert alert-info mb-8">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      <div>
+        <h3 class="font-bold">Core Principle: "Client Never Delivers"</h3>
+        <p class="text-sm">The dashboard never calls WhatsApp or Matrix APIs directly. It only inserts messages into the database with <code class="bg-base-300 px-1 rounded">delivery_status: 'queued'</code>. All delivery is handled server-side by the ai-worker, enabling centralized retry logic and clean separation of concerns.</p>
+      </div>
+    </div>
+
+    <!-- Stack Grid -->
+    <h3 class="text-xl font-bold mb-4">The Stack</h3>
+    <div class="grid sm:grid-cols-2 gap-4 mb-8">
+      <div class="arch-box card bg-base-200 border border-base-content/5 p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 rounded-lg bg-orange-500/10 flex items-center justify-center text-orange-400 text-xs font-bold">CF</div>
+          <div>
+            <h4 class="font-semibold text-sm">Cloudflare Workers</h4>
+            <p class="text-xs opacity-40">API + Hosting</p>
+          </div>
+        </div>
+        <p class="text-sm opacity-60">Hono framework on Workers for the API. Zero cold starts, global edge deployment. Pages for static hosting (dashboard, website, admin). Queues for message delivery. Workers AI for free embeddings.</p>
+      </div>
+      <div class="arch-box card bg-base-200 border border-base-content/5 p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center text-green-400 text-xs font-bold">SB</div>
+          <div>
+            <h4 class="font-semibold text-sm">Supabase</h4>
+            <p class="text-xs opacity-40">Database + Auth + Realtime</p>
+          </div>
+        </div>
+        <p class="text-sm opacity-60">PostgreSQL as the single source of truth. PostgREST auto-generates the CRUD API. Auth with JWT + OAuth. Realtime subscriptions for live dashboard updates. Storage for media. pgvector for semantic search.</p>
+      </div>
+      <div class="arch-box card bg-base-200 border border-base-content/5 p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-400 text-xs font-bold">AI</div>
+          <div>
+            <h4 class="font-semibold text-sm">AI Layer</h4>
+            <p class="text-xs opacity-40">Multi-provider</p>
+          </div>
+        </div>
+        <p class="text-sm opacity-60">Gemini 2.5 Flash (default), Claude Sonnet, GPT-4.1 &mdash; selectable per org. Unified <code class="bg-base-300 px-1 rounded text-xs">aiQuery()</code> interface. Cascading prompts: channel &gt; business &gt; org. Confidence scoring for auto-send vs. draft.</p>
+      </div>
+      <div class="arch-box card bg-base-200 border border-base-content/5 p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 text-xs font-bold">RT</div>
+          <div>
+            <h4 class="font-semibold text-sm">React Dashboard</h4>
+            <p class="text-xs opacity-40">Frontend</p>
+          </div>
+        </div>
+        <p class="text-sm opacity-60">React 19 + Vite SPA with Supabase Realtime for live message updates. Tailwind CSS, Lucide icons, emoji-mart. NL date parsing with chrono-node. Deployed on CF Pages.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUPABASE DEEP DIVE -->
+<section class="py-16 lg:py-24 bg-base-200">
+  <div class="max-w-4xl mx-auto px-6 lg:px-8">
+    <p class="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-4">Deep Dive</p>
+    <h2 class="text-3xl font-bold tracking-tight mb-4">Why Supabase enables rapid, error-free development</h2>
+    <p class="opacity-60 mb-8 leading-relaxed">Supabase isn't just a database &mdash; it's the entire backend layer. By making PostgreSQL the single source of truth and leveraging its built-in services, we eliminated entire categories of bugs and boilerplate.</p>
+
+    <div class="space-y-6">
+      <!-- RLS -->
+      <div class="card bg-base-100 border border-base-content/5">
+        <div class="card-body">
+          <h3 class="card-title text-lg flex items-center gap-2">
+            <span class="w-8 h-8 rounded-lg bg-error/10 flex items-center justify-center text-error text-sm">1</span>
+            Row-Level Security &mdash; Security at the DB, not the app
+          </h3>
+          <p class="opacity-60 text-sm leading-relaxed">Every table has RLS policies enforced at the PostgreSQL level. Users can never see data from other organizations, regardless of what the application code does. This eliminates an entire class of authorization bugs.</p>
+          <div class="bg-base-200 rounded-lg p-4 mt-2">
+            <p class="text-xs opacity-40 uppercase tracking-wider mb-2">Multi-tenant hierarchy</p>
+            <code class="text-sm text-primary block">Organization (billing) &rarr; Business (department) &rarr; Channel (WA number) &rarr; Team Member</code>
+            <p class="text-xs opacity-50 mt-2">Hard boundary on <code class="bg-base-300 px-1 rounded">org_id</code>, soft boundary on <code class="bg-base-300 px-1 rounded">business_id</code>. Helper functions: <code class="bg-base-300 px-1 rounded">get_my_team_org_ids()</code>, <code class="bg-base-300 px-1 rounded">get_my_business_ids()</code></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PostgREST -->
+      <div class="card bg-base-100 border border-base-content/5">
+        <div class="card-body">
+          <h3 class="card-title text-lg flex items-center gap-2">
+            <span class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-sm">2</span>
+            PostgREST &mdash; No hand-written CRUD
+          </h3>
+          <p class="opacity-60 text-sm leading-relaxed">Supabase auto-generates a REST API from the database schema. Every table gets typed queries, filters, and joins out of the box. The Hono Worker only handles business logic (webhooks, AI orchestration, delivery) &mdash; not basic CRUD.</p>
+          <div class="bg-base-200 rounded-lg p-4 mt-2">
+            <p class="text-xs opacity-50"><strong>Result:</strong> Estimated 10-12 days saved vs. hand-writing a custom API. Zero bugs from serialization mismatches.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Realtime -->
+      <div class="card bg-base-100 border border-base-content/5">
+        <div class="card-body">
+          <h3 class="card-title text-lg flex items-center gap-2">
+            <span class="w-8 h-8 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary text-sm">3</span>
+            Realtime &mdash; Live dashboard, zero custom WebSockets
+          </h3>
+          <p class="opacity-60 text-sm leading-relaxed">Supabase Realtime broadcasts database changes over WebSocket. When a new message is inserted (by webhook, AI worker, or agent), the dashboard receives it instantly. No custom WebSocket server, no message broker, no polling.</p>
+          <div class="bg-base-200 rounded-lg p-4 mt-2">
+            <p class="text-xs opacity-50">Also powers the "Client Never Delivers" pattern: the ai-worker subscribes to message inserts and handles delivery, triggered by the same Realtime channel.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Auth -->
+      <div class="card bg-base-100 border border-base-content/5">
+        <div class="card-body">
+          <h3 class="card-title text-lg flex items-center gap-2">
+            <span class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent text-sm">4</span>
+            Auth &mdash; JWT + RLS integration
+          </h3>
+          <p class="opacity-60 text-sm leading-relaxed">Supabase Auth issues JWTs that are automatically validated by RLS policies. Google OAuth is a config toggle. Signup auto-creates org, default business, and team member via a database trigger. API keys use hashed storage with scoped access.</p>
+        </div>
+      </div>
+
+      <!-- pgvector -->
+      <div class="card bg-base-100 border border-base-content/5">
+        <div class="card-body">
+          <h3 class="card-title text-lg flex items-center gap-2">
+            <span class="w-8 h-8 rounded-lg bg-warning/10 flex items-center justify-center text-warning text-sm">5</span>
+            pgvector &mdash; Semantic search in the same DB
+          </h3>
+          <p class="opacity-60 text-sm leading-relaxed">Knowledge base documents are chunked, embedded via Cloudflare Workers AI (free, 768d), and stored in pgvector. Semantic search queries run in ~1ms on IVFFlat indexes. No external vector DB dependency &mdash; everything stays in the SSOT.</p>
+          <div class="bg-base-200 rounded-lg p-4 mt-2">
+            <p class="text-xs opacity-50">SQL RPCs: <code class="bg-base-300 px-1 rounded">search_knowledge_vector()</code>, <code class="bg-base-300 px-1 rounded">search_knowledge_text()</code>, <code class="bg-base-300 px-1 rounded">search_conversation_messages()</code></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Storage -->
+      <div class="card bg-base-100 border border-base-content/5">
+        <div class="card-body">
+          <h3 class="card-title text-lg flex items-center gap-2">
+            <span class="w-8 h-8 rounded-lg bg-info/10 flex items-center justify-center text-info text-sm">6</span>
+            Storage &mdash; RLS-enforced media
+          </h3>
+          <p class="opacity-60 text-sm leading-relaxed">WhatsApp media (images, video, documents) are downloaded from Meta CDN and stored in Supabase Storage with RLS policies. Private buckets ensure org-scoped access. No separate S3 config needed.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI ARCHITECTURE -->
+<section class="py-16 lg:py-24">
+  <div class="max-w-4xl mx-auto px-6 lg:px-8">
+    <p class="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-4">AI Pipeline</p>
+    <h2 class="text-3xl font-bold tracking-tight mb-8">Multi-provider AI with semantic search</h2>
+
+    <div class="card bg-base-200 border border-base-content/5 p-6 lg:p-8 mb-8">
+      <pre class="text-sm text-primary/80 overflow-x-auto leading-relaxed font-mono"><code>Inbound message arrives
+    |
+    v
+Load AI instructions (cascade: channel > business > org)
+    |
+    v
+Semantic search: pgvector on KB chunks + conversation history
+    |
+    v
+aiQuery() -> Assemble prompt -> Call AI provider
+    |             |
+    |     +-------+--------+--------+
+    |     |       |        |        |
+    |   Gemini  Claude   GPT-4.1  (per-org)
+    |     |       |        |
+    |     +-------+--------+
+    |             |
+    v             v
+Parse JSON response
+    |
+    +-> confidence >= 80? -> Auto-send
+    +-> confidence < 80?  -> Save as draft
+    +-> escalate: true?   -> Hand to human</code></pre>
+    </div>
+
+    <div class="grid sm:grid-cols-3 gap-4 mb-8">
+      <div class="card bg-base-200 border border-base-content/5 p-5 text-center">
+        <div class="text-2xl mb-2">Gemini</div>
+        <p class="text-xs opacity-50">Default provider. Best cost/quality ratio. 2.5 Flash, Pro, Lite.</p>
+      </div>
+      <div class="card bg-base-200 border border-base-content/5 p-5 text-center">
+        <div class="text-2xl mb-2">Claude</div>
+        <p class="text-xs opacity-50">Highest quality. Sonnet, Opus, Haiku. Selectable per org.</p>
+      </div>
+      <div class="card bg-base-200 border border-base-content/5 p-5 text-center">
+        <div class="text-2xl mb-2">GPT</div>
+        <p class="text-xs opacity-50">OpenAI fallback. GPT-4.1, GPT-5.4, Nano.</p>
+      </div>
+    </div>
+
+    <div class="card bg-base-200 border border-base-content/5">
+      <div class="card-body">
+        <h3 class="card-title">Cascading AI Prompts</h3>
+        <p class="opacity-60 text-sm leading-relaxed mb-4">A single business can have multiple AI personalities per channel. The prompt resolution cascades: channel-specific override beats business-level prompt, which beats the org default.</p>
+        <div class="bg-base-100 rounded-lg p-4">
+          <p class="text-sm opacity-70"><strong>Example:</strong> Acme Retail has two channels on the same number:</p>
+          <ul class="text-sm opacity-60 mt-2 space-y-1 ml-4">
+            <li>&bull; <strong>Sales channel:</strong> Aggressive, upsell-focused AI persona</li>
+            <li>&bull; <strong>Support channel:</strong> Empathetic, help-first AI persona</li>
+          </ul>
+          <p class="text-xs opacity-40 mt-2">Same infrastructure, different personalities. No duplication.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTEGRATIONS -->
+<section class="py-16 lg:py-24 bg-base-200">
+  <div class="max-w-4xl mx-auto px-6 lg:px-8">
+    <p class="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-4">Integrations</p>
+    <h2 class="text-3xl font-bold tracking-tight mb-8">Connected ecosystem</h2>
+
+    <div class="grid sm:grid-cols-2 gap-6">
+      <div class="card bg-base-100 border border-base-content/5">
+        <div class="card-body">
+          <h3 class="card-title text-base">WhatsApp Business API</h3>
+          <p class="opacity-60 text-sm">Meta Cloud API via OAuth Embedded Signup. Webhooks for messages, media, delivery status. 24-hour reply window enforcement. Media download/upload pipeline to Supabase Storage.</p>
+        </div>
+      </div>
+      <div class="card bg-base-100 border border-base-content/5">
+        <div class="card-body">
+          <h3 class="card-title text-base">Personal WhatsApp (Matrix)</h3>
+          <p class="opacity-60 text-sm">mautrix-whatsapp bridge on a managed Matrix homeserver. Node.js relay on GCE VM syncs messages to Supabase. Pairing code flow for linking personal devices.</p>
+        </div>
+      </div>
+      <div class="card bg-base-100 border border-base-content/5">
+        <div class="card-body">
+          <h3 class="card-title text-base">Shopify</h3>
+          <p class="opacity-60 text-sm">Remix app with OAuth install flow. Webhook-driven product/order sync with vector embeddings. AI context injection for order tracking and product recommendations.</p>
+        </div>
+      </div>
+      <div class="card bg-base-100 border border-base-content/5">
+        <div class="card-body">
+          <h3 class="card-title text-base">Email (Resend)</h3>
+          <p class="opacity-60 text-sm">Custom domain email channels with DKIM verification. Inbound webhooks create conversations. Outbound via Resend API. Unified in the same inbox as WhatsApp.</p>
+        </div>
+      </div>
+      <div class="card bg-base-100 border border-base-content/5">
+        <div class="card-body">
+          <h3 class="card-title text-base">Stripe Billing</h3>
+          <p class="opacity-60 text-sm">Subscription plans (Free/Growth/Pro) with hosted checkout. Webhook-driven plan updates. Usage tracking for AI reply limits. Multi-provider billing support.</p>
+        </div>
+      </div>
+      <div class="card bg-base-100 border border-base-content/5">
+        <div class="card-body">
+          <h3 class="card-title text-base">MCP Server</h3>
+          <p class="opacity-60 text-sm">Model Context Protocol server for AI agent access. 10 tools: send messages, list conversations, search, assign, resolve. API key auth, stdio + SSE transport.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPLOYMENT -->
+<section class="py-16 lg:py-24">
+  <div class="max-w-4xl mx-auto px-6 lg:px-8">
+    <p class="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-4">Infrastructure</p>
+    <h2 class="text-3xl font-bold tracking-tight mb-8">Production deployment</h2>
+
+    <div class="overflow-x-auto mb-8">
+      <table class="table table-sm">
+        <thead>
+          <tr><th>Service</th><th>URL</th><th>Host</th><th>Stack</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="font-medium">Website</td><td class="opacity-60">sendhub.ai</td><td>CF Pages</td><td>Astro</td></tr>
+          <tr><td class="font-medium">Dashboard</td><td class="opacity-60">app.sendhub.ai</td><td>CF Pages</td><td>React + Vite</td></tr>
+          <tr><td class="font-medium">API</td><td class="opacity-60">api.sendhub.ai</td><td>CF Workers</td><td>Hono</td></tr>
+          <tr><td class="font-medium">Admin</td><td class="opacity-60">admin.sendhub.ai</td><td>CF Pages</td><td>React + Vite</td></tr>
+          <tr><td class="font-medium">Matrix Relay</td><td class="opacity-60">matrix.sendhub.ai</td><td>GCE VM</td><td>Node.js + PM2</td></tr>
+          <tr><td class="font-medium">Shopify App</td><td class="opacity-60">shpfy.sendhub.ai</td><td>Railway</td><td>Remix</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card bg-base-200 border border-base-content/5">
+      <div class="card-body">
+        <h3 class="card-title">Message Delivery Pipeline</h3>
+        <div class="bg-base-100 rounded-lg p-4 mt-2">
+          <pre class="text-xs text-primary/80 overflow-x-auto leading-relaxed font-mono"><code>Dashboard inserts message (delivery_status: 'queued')
+  -> Supabase Realtime fires INSERT event
+    -> ai-worker picks up
+      |-- Business channel: POST to WA Cloud API
+      |     |-- Text: send directly
+      |     |-- Media: download -> upload to WA Media API -> send
+      |-- Personal channel: POST to matrix-socket -> Bridge -> WA
+  -> Update delivery_status (sent/failed)
+  -> Cron retry every minute for failed deliveries
+  -> Dead letter queue for persistent failures</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLAUDE CODE -->
+<section class="py-16 lg:py-24 bg-base-200">
+  <div class="max-w-4xl mx-auto px-6 lg:px-8">
+    <p class="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-4">Development Process</p>
+    <h2 class="text-3xl font-bold tracking-tight mb-4">AI-augmented development with Claude Code</h2>
+    <p class="opacity-60 mb-8 leading-relaxed">SendHub.ai was built with extensive use of Claude Code for AI-augmented development. This isn't about generating boilerplate &mdash; it's about having an AI pair programmer that understands the full architecture and can make informed decisions across the stack.</p>
+
+    <div class="space-y-4">
+      <div class="card bg-base-100 border border-base-content/5">
+        <div class="card-body">
+          <h3 class="card-title text-base flex items-center gap-2">
+            <span class="badge badge-primary badge-sm">1</span>
+            Architecture-aware code generation
+          </h3>
+          <p class="opacity-60 text-sm">Claude Code has full context of the codebase via CLAUDE.md files documenting architecture decisions, conventions, and the multi-tenant model. New features are generated with correct RLS patterns, proper error handling, and consistent API design from the start.</p>
+        </div>
+      </div>
+      <div class="card bg-base-100 border border-base-content/5">
+        <div class="card-body">
+          <h3 class="card-title text-base flex items-center gap-2">
+            <span class="badge badge-secondary badge-sm">2</span>
+            Database migrations & RLS policies
+          </h3>
+          <p class="opacity-60 text-sm">SQL migrations with RLS policies are complex and error-prone. Claude Code generates migrations that follow established patterns &mdash; denormalized org_id/business_id columns, proper policy functions, and cascade-aware foreign keys &mdash; catching security gaps before they reach production.</p>
+        </div>
+      </div>
+      <div class="card bg-base-100 border border-base-content/5">
+        <div class="card-body">
+          <h3 class="card-title text-base flex items-center gap-2">
+            <span class="badge badge-accent badge-sm">3</span>
+            Cross-service consistency
+          </h3>
+          <p class="opacity-60 text-sm">With 6+ deployed services (Worker, Dashboard, Admin, Shopify App, Matrix Socket, MCP Server), keeping interfaces consistent is critical. Claude Code ensures type alignment across services, consistent error handling patterns, and shared conventions like the "Client Never Delivers" rule.</p>
+        </div>
+      </div>
+      <div class="card bg-base-100 border border-base-content/5">
+        <div class="card-body">
+          <h3 class="card-title text-base flex items-center gap-2">
+            <span class="badge badge-warning badge-sm">4</span>
+            Rapid feature development
+          </h3>
+          <p class="opacity-60 text-sm">Features like the knowledge base semantic search, scheduled messaging, Shopify webhook sync, and email channel integration were implemented end-to-end (migration + API + UI) in single sessions. The AI understands the patterns and produces production-ready code that follows the project's conventions.</p>
+        </div>
+      </div>
+      <div class="card bg-base-100 border border-base-content/5">
+        <div class="card-body">
+          <h3 class="card-title text-base flex items-center gap-2">
+            <span class="badge badge-info badge-sm">5</span>
+            Documentation as development
+          </h3>
+          <p class="opacity-60 text-sm">Comprehensive CLAUDE.md files serve dual purpose: they guide AI-augmented development and document the system for human developers. Architecture decisions, integration flows, deployment procedures, and debugging guides are maintained as living documentation.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KEY DECISIONS -->
+<section class="py-16 lg:py-24">
+  <div class="max-w-4xl mx-auto px-6 lg:px-8">
+    <p class="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-4">Decisions</p>
+    <h2 class="text-3xl font-bold tracking-tight mb-8">Key technical decisions</h2>
+
+    <div class="space-y-6">
+      <div class="collapse collapse-arrow bg-base-200 border border-base-content/5">
+        <input type="radio" name="decisions" checked />
+        <div class="collapse-title font-semibold">Database-first architecture</div>
+        <div class="collapse-content">
+          <p class="text-sm opacity-60">Supabase PostgreSQL as SSOT. PostgREST auto-generates the API. RLS enforced at DB level, not app middleware. Realtime subscriptions for live updates. Auth + JWT built-in. <strong>Trade-off:</strong> Less flexibility than hand-written API, but massive productivity gain.</p>
+        </div>
+      </div>
+      <div class="collapse collapse-arrow bg-base-200 border border-base-content/5">
+        <input type="radio" name="decisions" />
+        <div class="collapse-title font-semibold">Stateless Workers for the hot path</div>
+        <div class="collapse-content">
+          <p class="text-sm opacity-60">Webhook processing and AI replies run on Cloudflare Workers &mdash; zero cold start, global edge, low latency. Meta webhook timeout is 30s, so fast processing is critical. Persistent services (Matrix socket, Shopify app) only for long-lived connections.</p>
+        </div>
+      </div>
+      <div class="collapse collapse-arrow bg-base-200 border border-base-content/5">
+        <input type="radio" name="decisions" />
+        <div class="collapse-title font-semibold">pgvector over external vector DBs</div>
+        <div class="collapse-content">
+          <p class="text-sm opacity-60">Semantic search with pgvector IVFFlat index (~1ms queries on 10K chunks). Stored in the SSOT. Supports cascading scopes (org/business/channel). <strong>Alternatives considered:</strong> Pinecone, Weaviate &mdash; added external dependency and costs scale with embedding count.</p>
+        </div>
+      </div>
+      <div class="collapse collapse-arrow bg-base-200 border border-base-content/5">
+        <input type="radio" name="decisions" />
+        <div class="collapse-title font-semibold">Multi-tenant hierarchy from day 1</div>
+        <div class="collapse-content">
+          <p class="text-sm opacity-60">Org &rarr; Business &rarr; Channel &rarr; Team Member. Enterprises: 1 org, many businesses. SMBs: 1 org, 1 business (hidden layer). AI prompts cascade through the hierarchy. Scales from solo pizza shop to enterprise with 100 departments.</p>
+        </div>
+      </div>
+      <div class="collapse collapse-arrow bg-base-200 border border-base-content/5">
+        <input type="radio" name="decisions" />
+        <div class="collapse-title font-semibold">AI provider abstraction</div>
+        <div class="collapse-content">
+          <p class="text-sm opacity-60">Pluggable interface: <code class="bg-base-300 px-1 rounded">resolveProviderConfig(env, orgSettings)</code> &rarr; <code class="bg-base-300 px-1 rounded">callProvider(config, input)</code>. Customers choose provider (cost, preference). Fallback if one provider is down. Cost arbitrage (Gemini cheapest, Claude highest quality).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-16 lg:py-24 bg-base-200">
+  <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+    <h2 class="text-3xl font-bold tracking-tight mb-4">Interested in working together?</h2>
+    <p class="opacity-50 mb-8 max-w-lg mx-auto">I build production SaaS platforms with modern architecture. Let's talk about your project.</p>
+    <div class="flex justify-center gap-3">
+      <a href="mailto:gabe@fijiwebdesign.com" class="btn btn-primary">Get in Touch</a>
+      <a href="index.html" class="btn btn-outline">&larr; Back to Portfolio</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-base-content/5 py-8">
+  <div class="max-w-4xl mx-auto px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm opacity-40">
+    <p>&copy; 2026 Gabirieli Lalasava</p>
+    <div class="flex gap-4">
+      <a href="https://linkedin.com/in/bucabay" target="_blank" class="hover:text-primary transition-colors">LinkedIn</a>
+      <a href="https://github.com/fijiwebdesign" target="_blank" class="hover:text-primary transition-colors">GitHub</a>
+      <a href="https://sendhub.ai" target="_blank" class="hover:text-primary transition-colors">SendHub.ai</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
