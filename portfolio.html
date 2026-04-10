@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Gabe Lalasava — Work Samples</title>
+<style>
+  @page { size: Letter; margin: 0; }
+  :root {
+    --bg: #0c0e1a;
+    --bg-2: #151829;
+    --bg-3: #1d2236;
+    --border: #262b44;
+    --text: #e6e8f0;
+    --muted: #9096b3;
+    --faint: #6a6f8a;
+    --green: oklch(0.72 0.19 155);
+    --purple: oklch(0.65 0.15 260);
+    --accent: oklch(0.72 0.19 45);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
+    font-size: 9pt;
+    line-height: 1.45;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page {
+    width: 8.5in;
+    height: 11in;
+    padding: 0.5in 0.55in;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+    break-after: page;
+  }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+
+  .glow {
+    position: absolute;
+    width: 5in; height: 5in;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.14;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .glow.g1 { background: var(--green); top: -2in; left: -1.5in; }
+  .glow.g2 { background: var(--purple); bottom: -2in; right: -1.5in; }
+  .glow.g3 { background: var(--accent); top: 30%; right: -2in; opacity: 0.08; }
+
+  .content { position: relative; z-index: 1; height: 100%; display: flex; flex-direction: column; }
+
+  .gradient-text {
+    background: linear-gradient(135deg, var(--green), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Shared */
+  .eyebrow {
+    font-size: 7.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: 700;
+    color: var(--green);
+    margin-bottom: 6pt;
+  }
+  .section-title {
+    font-size: 22pt;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin-bottom: 8pt;
+  }
+  .section-sub {
+    color: var(--muted);
+    font-size: 9.5pt;
+    margin-bottom: 18pt;
+    max-width: 5.5in;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 7pt;
+    padding: 2pt 6pt;
+    border-radius: 99pt;
+    background: var(--bg-3);
+    border: 0.5pt solid var(--border);
+    color: var(--muted);
+    white-space: nowrap;
+    margin-right: 2pt;
+    margin-bottom: 2pt;
+  }
+  .badge.p { border-color: color-mix(in oklch, var(--green), transparent 55%); color: var(--green); background: color-mix(in oklch, var(--green), transparent 88%); }
+  .badge.s { border-color: color-mix(in oklch, var(--purple), transparent 55%); color: var(--purple); background: color-mix(in oklch, var(--purple), transparent 88%); }
+  .badge.a { border-color: color-mix(in oklch, var(--accent), transparent 55%); color: var(--accent); background: color-mix(in oklch, var(--accent), transparent 88%); }
+
+  .divider {
+    height: 1pt;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 10pt 0;
+  }
+
+  /* ─── Cover page ─── */
+  .cover .content { justify-content: space-between; }
+  .cover .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 9pt;
+    color: var(--muted);
+  }
+  .cover .brand {
+    font-weight: 800;
+    font-size: 11pt;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .cover .brand .dot { color: var(--green); }
+
+  .cover .hero {
+    margin-top: 0.8in;
+  }
+  .cover .hero .label {
+    display: inline-block;
+    font-size: 7.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: 700;
+    color: var(--green);
+    border: 0.5pt solid color-mix(in oklch, var(--green), transparent 55%);
+    border-radius: 99pt;
+    padding: 4pt 10pt;
+    margin-bottom: 18pt;
+  }
+  .cover h1 {
+    font-size: 52pt;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+    margin-bottom: 14pt;
+  }
+  .cover .tagline {
+    font-size: 13pt;
+    color: var(--muted);
+    max-width: 5.5in;
+    line-height: 1.45;
+    margin-bottom: 10pt;
+  }
+  .cover .tagline strong { color: var(--text); font-weight: 600; }
+
+  .cover .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10pt;
+    margin-top: 28pt;
+  }
+  .stat {
+    background: var(--bg-2);
+    border: 0.5pt solid var(--border);
+    border-radius: 10pt;
+    padding: 14pt 10pt;
+    text-align: center;
+  }
+  .stat .n {
+    font-size: 22pt;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .stat .l {
+    font-size: 7pt;
+    color: var(--faint);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-top: 4pt;
+  }
+
+  .cover .footer-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10pt;
+    border-top: 0.5pt solid var(--border);
+    font-size: 8pt;
+    color: var(--faint);
+  }
+  .cover .footer-bar a { color: var(--green); text-decoration: none; }
+
+  /* ─── Impact row (case study hero stat) ─── */
+  .impact-row {
+    display: grid;
+    grid-template-columns: 1.9in 1fr;
+    gap: 14pt;
+    margin-bottom: 12pt;
+    background: linear-gradient(135deg,
+      color-mix(in oklch, var(--green), transparent 92%),
+      color-mix(in oklch, var(--purple), transparent 92%));
+    border: 0.5pt solid color-mix(in oklch, var(--green), transparent 60%);
+    border-radius: 12pt;
+    padding: 14pt 16pt;
+    align-items: center;
+  }
+  .impact {
+    text-align: center;
+    border-right: 0.5pt solid var(--border);
+    padding-right: 12pt;
+  }
+  .big-stat {
+    font-size: 40pt;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 0.9;
+  }
+  .impact-label {
+    font-size: 7.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--faint);
+    margin-top: 4pt;
+    font-weight: 600;
+  }
+  .impact-body .impact-title {
+    font-size: 7pt;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--green);
+    font-weight: 700;
+    margin-bottom: 4pt;
+  }
+  .impact-body p {
+    font-size: 9pt;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .impact-body p strong { color: var(--text); }
+
+  /* ─── Featured project card ─── */
+  .featured {
+    background: var(--bg-2);
+    border: 0.5pt solid var(--border);
+    border-radius: 14pt;
+    padding: 18pt 18pt;
+    margin-bottom: 12pt;
+    position: relative;
+    overflow: hidden;
+  }
+  .featured::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2pt;
+    background: linear-gradient(90deg, var(--green), var(--purple));
+  }
+  .featured-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12pt;
+    margin-bottom: 10pt;
+  }
+  .featured-logo {
+    width: 32pt;
+    height: 32pt;
+    border-radius: 8pt;
+    background: color-mix(in oklch, var(--green), transparent 85%);
+    color: var(--green);
+    font-weight: 800;
+    font-size: 18pt;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .featured-logo.s { background: color-mix(in oklch, var(--purple), transparent 85%); color: var(--purple); }
+  .featured-title {
+    flex: 1;
+  }
+  .featured-title h3 {
+    font-size: 18pt;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    margin-bottom: 3pt;
+  }
+  .featured-title .url {
+    font-size: 8.5pt;
+    color: var(--green);
+  }
+  .featured-title .url.s { color: var(--purple); }
+
+  .featured-tag {
+    font-size: 7pt;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    color: var(--green);
+    padding: 4pt 9pt;
+    border: 0.5pt solid color-mix(in oklch, var(--green), transparent 55%);
+    border-radius: 99pt;
+    white-space: nowrap;
+  }
+  .featured-tag.s { color: var(--purple); border-color: color-mix(in oklch, var(--purple), transparent 55%); }
+
+  .featured-desc {
+    color: var(--muted);
+    font-size: 9pt;
+    line-height: 1.5;
+    margin-bottom: 10pt;
+  }
+  .featured-desc strong { color: var(--text); }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10pt 14pt;
+    margin-bottom: 10pt;
+  }
+  .feature-item {
+    padding-left: 10pt;
+    border-left: 1.5pt solid var(--green);
+  }
+  .feature-item.s { border-left-color: var(--purple); }
+  .feature-item .t {
+    font-size: 8pt;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 2pt;
+  }
+  .feature-item .d {
+    font-size: 7.5pt;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .featured-tech {
+    border-top: 0.5pt solid var(--border);
+    padding-top: 8pt;
+  }
+  .featured-tech .tech-label {
+    font-size: 6.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--faint);
+    margin-bottom: 5pt;
+  }
+
+  /* ─── Project grid ─── */
+  .projects {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10pt;
+  }
+  .proj {
+    background: var(--bg-2);
+    border: 0.5pt solid var(--border);
+    border-radius: 10pt;
+    padding: 12pt 13pt;
+    display: flex;
+    flex-direction: column;
+    min-height: 2in;
+  }
+  .proj-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8pt;
+  }
+  .proj-logo {
+    width: 22pt; height: 22pt;
+    border-radius: 6pt;
+    background: color-mix(in oklch, var(--green), transparent 85%);
+    color: var(--green);
+    font-weight: 800;
+    font-size: 12pt;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .proj-logo.s { background: color-mix(in oklch, var(--purple), transparent 85%); color: var(--purple); }
+  .proj-logo.a { background: color-mix(in oklch, var(--accent), transparent 85%); color: var(--accent); }
+  .proj-tag {
+    font-size: 6.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    color: var(--green);
+    padding: 2.5pt 6pt;
+    border: 0.5pt solid color-mix(in oklch, var(--green), transparent 55%);
+    border-radius: 99pt;
+  }
+  .proj-tag.s { color: var(--purple); border-color: color-mix(in oklch, var(--purple), transparent 55%); }
+  .proj-tag.a { color: var(--accent); border-color: color-mix(in oklch, var(--accent), transparent 55%); }
+  .proj-tag.ghost { color: var(--faint); border-color: var(--border); }
+  .proj h4 {
+    font-size: 11pt;
+    font-weight: 700;
+    margin-bottom: 4pt;
+    letter-spacing: -0.01em;
+  }
+  .proj .url {
+    font-size: 7.5pt;
+    color: var(--green);
+    margin-bottom: 5pt;
+  }
+  .proj .url.s { color: var(--purple); }
+  .proj p {
+    font-size: 8pt;
+    color: var(--muted);
+    line-height: 1.45;
+    margin-bottom: 8pt;
+    flex: 1;
+  }
+  .proj .tech {
+    font-size: 6.5pt;
+    color: var(--faint);
+    font-family: ui-monospace, monospace;
+    border-top: 0.5pt solid var(--border);
+    padding-top: 6pt;
+  }
+
+  /* ─── Case study / architecture page ─── */
+  .arch-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10pt;
+    margin-bottom: 10pt;
+  }
+  .arch-card {
+    background: var(--bg-2);
+    border: 0.5pt solid var(--border);
+    border-radius: 10pt;
+    padding: 12pt 13pt;
+  }
+  .arch-card h4 {
+    font-size: 9.5pt;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 2pt;
+  }
+  .arch-card .role {
+    font-size: 7pt;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--green);
+    margin-bottom: 5pt;
+  }
+  .arch-card p {
+    font-size: 8pt;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+
+  .highlight-box {
+    background: linear-gradient(135deg,
+      color-mix(in oklch, var(--green), transparent 92%),
+      color-mix(in oklch, var(--purple), transparent 92%));
+    border: 0.5pt solid color-mix(in oklch, var(--green), transparent 60%);
+    border-radius: 12pt;
+    padding: 14pt 16pt;
+    margin-bottom: 12pt;
+  }
+  .highlight-box .label {
+    font-size: 7pt;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-weight: 700;
+    color: var(--green);
+    margin-bottom: 5pt;
+  }
+  .highlight-box h3 {
+    font-size: 13pt;
+    font-weight: 700;
+    margin-bottom: 5pt;
+    letter-spacing: -0.01em;
+  }
+  .highlight-box p {
+    font-size: 8.5pt;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .highlight-box p strong { color: var(--text); }
+
+  .stack-cols {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8pt;
+  }
+  .stack-col {
+    background: var(--bg-2);
+    border: 0.5pt solid var(--border);
+    border-radius: 8pt;
+    padding: 10pt;
+  }
+  .stack-col h5 {
+    font-size: 8pt;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6pt;
+    display: flex;
+    align-items: center;
+    gap: 5pt;
+  }
+  .stack-col .bullet {
+    width: 6pt; height: 6pt; border-radius: 50%;
+    background: var(--green);
+  }
+  .stack-col.s .bullet { background: var(--purple); }
+  .stack-col.a .bullet { background: var(--accent); }
+  .stack-col.f .bullet { background: var(--faint); }
+
+  /* Page header */
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16pt;
+    padding-bottom: 8pt;
+    border-bottom: 0.5pt solid var(--border);
+  }
+  .page-header .brand {
+    font-size: 9.5pt;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .page-header .brand .dot { color: var(--green); }
+  .page-header .label {
+    font-size: 7pt;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--faint);
+  }
+
+  .page-footer {
+    margin-top: auto;
+    padding-top: 8pt;
+    border-top: 0.5pt solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    font-size: 7pt;
+    color: var(--faint);
+  }
+  .page-footer a { color: var(--green); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ PAGE 1 · COVER ═══════════ -->
+<div class="page cover">
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+
+  <div class="content">
+    <div class="top-bar">
+      <div class="brand">gabe<span class="dot">.</span>dev</div>
+      <div>2026 · Work Samples</div>
+    </div>
+
+    <div class="hero">
+      <div class="label">Portfolio · Case Studies &amp; Selected Work</div>
+      <h1>Building the <span class="gradient-text">future,</span><br>one product<br>at a time.</h1>
+      <p class="tagline">
+        <strong>Gabe Lalasava</strong> — full-stack developer &amp; founder with 20+ years shipping AI-powered SaaS, real-time platforms, and mobile apps from zero to production.
+      </p>
+      <p class="tagline" style="font-size:10pt;margin-top:6pt;">
+        This portfolio showcases selected projects, architecture highlights, and technical deep-dives across products I've founded, led, or made significant contributions to.
+      </p>
+
+      <div class="stats">
+        <div class="stat"><div class="n gradient-text">82%</div><div class="l">Support Cut<br>(SendHub)</div></div>
+        <div class="stat"><div class="n gradient-text">70%</div><div class="l">Bandwidth Cut<br>(Seedess)</div></div>
+        <div class="stat"><div class="n gradient-text">20+</div><div class="l">Years Dev</div></div>
+        <div class="stat"><div class="n gradient-text">4×</div><div class="l">Founder</div></div>
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <div>Gabe Lalasava · San Diego, CA</div>
+      <div><a href="https://gabe.m82.ai">gabe.m82.ai</a> · <a href="mailto:gabe@fijiwebdesign.com">gabe@fijiwebdesign.com</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ PAGE 2 · CASE STUDY: SENDHUB ═══════════ -->
+<div class="page">
+  <div class="glow g1"></div>
+  <div class="glow g3"></div>
+
+  <div class="content">
+    <div class="page-header">
+      <div class="brand">gabe<span class="dot">.</span>dev</div>
+      <div class="label">Case Study · 01</div>
+    </div>
+
+    <div class="eyebrow">Case Study</div>
+    <h2 class="section-title">SendHub<span class="gradient-text">.ai</span></h2>
+    <p class="section-sub">AI-powered omnichannel messaging for businesses. Multi-tenant SaaS delivering a unified inbox, intelligent auto-replies, voice AI, and e-commerce integrations on the edge.</p>
+
+    <div class="impact-row">
+      <div class="impact">
+        <div class="big-stat gradient-text">82%</div>
+        <div class="impact-label">Reduction in<br>Customer Support Load</div>
+      </div>
+      <div class="impact-body">
+        <div class="impact-title">Outcome</div>
+        <p>AI auto-replies, cascading business prompts, and a semantic knowledge base <strong>cut customer support workload by up to 82%</strong> for pilot businesses — letting small teams handle enterprise-scale inbound volume with sub-second response times on the edge.</p>
+      </div>
+    </div>
+
+    <div class="featured">
+      <div class="featured-head">
+        <div class="featured-logo">S</div>
+        <div class="featured-title">
+          <h3>SendHub.ai</h3>
+          <div class="url">sendhub.ai · Founder &amp; Lead Engineer</div>
+        </div>
+        <div class="featured-tag">Production</div>
+      </div>
+      <p class="featured-desc">
+        A <strong>multi-tenant SaaS</strong> giving businesses AI-powered omnichannel messaging — WhatsApp, SMS, voice, email, and embeddable web chat — in a single unified inbox. Supports WhatsApp Business API for business clients, personal WhatsApp via a <strong>Matrix bridge</strong>, plus SMS and voice over <strong>Telnyx and Twilio</strong>. Runs entirely on <strong>Cloudflare Workers</strong> for low-latency global edge delivery.
+      </p>
+
+      <div class="featured-grid">
+        <div class="feature-item">
+          <div class="t">Edge-Native Architecture</div>
+          <div class="d">Entire API on Cloudflare Workers + Hono. Zero cold starts, sub-100ms global latency, queues for message delivery, Workers AI for free embeddings.</div>
+        </div>
+        <div class="feature-item s">
+          <div class="t">Dual WhatsApp Strategy</div>
+          <div class="d"><strong>WA Business API</strong> for enterprise clients via Meta OAuth Embedded Signup. <strong>Matrix bridge</strong> (mautrix-whatsapp) for personal WhatsApp accounts — one platform, every WA user.</div>
+        </div>
+        <div class="feature-item">
+          <div class="t">Multi-Provider AI</div>
+          <div class="d">Gemini 2.5 (default), Claude Sonnet, GPT-4.1 — selectable per org. Unified <code>aiQuery()</code> interface with cascading prompts (channel &gt; business &gt; org).</div>
+        </div>
+        <div class="feature-item s">
+          <div class="t">Voice AI + Payments</div>
+          <div class="d"><strong>Fish Audio</strong> for low-latency voice replies. <strong>Telnyx + Twilio</strong> for numbers and SMS/voice. <strong>Stripe + Plaid (Link)</strong> for cards and bank-account payment processing in-conversation.</div>
+        </div>
+        <div class="feature-item">
+          <div class="t">Semantic Knowledge Base</div>
+          <div class="d">Documents chunked and embedded via Cloudflare Workers AI, stored in <strong>pgvector</strong>. ~1ms queries on IVFFlat indexes. Powers RAG for auto-replies.</div>
+        </div>
+        <div class="feature-item s">
+          <div class="t">"Client Never Delivers"</div>
+          <div class="d">Dashboard only inserts messages into Postgres. All delivery handled server-side by the ai-worker — centralized retries, clean separation, no client-side race conditions.</div>
+        </div>
+      </div>
+
+      <div class="featured-tech">
+        <div class="tech-label">Architecture &amp; Stack</div>
+        <span class="badge p">CF Workers</span>
+        <span class="badge p">Hono</span>
+        <span class="badge p">React 19</span>
+        <span class="badge p">Supabase</span>
+        <span class="badge p">pgvector</span>
+        <span class="badge s">Gemini</span>
+        <span class="badge s">Claude</span>
+        <span class="badge s">GPT-4.1</span>
+        <span class="badge s">Fish Audio</span>
+        <span class="badge">WA Business API</span>
+        <span class="badge">Matrix Bridge</span>
+        <span class="badge">Telnyx</span>
+        <span class="badge">Twilio</span>
+        <span class="badge">Shopify</span>
+        <span class="badge">Stripe</span>
+        <span class="badge">Plaid (Link)</span>
+        <span class="badge">MCP Server</span>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div>Gabe Lalasava · Case Studies · 2026</div>
+      <div><a href="https://sendhub.ai">sendhub.ai</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ PAGE 3 · CASE STUDY: SEEDESS ═══════════ -->
+<div class="page">
+  <div class="glow g2"></div>
+  <div class="glow g3"></div>
+
+  <div class="content">
+    <div class="page-header">
+      <div class="brand">gabe<span class="dot">.</span>dev</div>
+      <div class="label">Case Study · 02</div>
+    </div>
+
+    <div class="eyebrow" style="color:var(--purple);">Case Study</div>
+    <h2 class="section-title">Seed<span class="gradient-text">ess</span></h2>
+    <p class="section-sub">P2P 4K video streaming on BitTorrent. Browser-native WebTorrent delivery turns every viewer into a peer, slashing bandwidth costs without sacrificing quality.</p>
+
+    <div class="impact-row" style="
+      background: linear-gradient(135deg,
+        color-mix(in oklch, var(--purple), transparent 92%),
+        color-mix(in oklch, var(--green), transparent 92%));
+      border-color: color-mix(in oklch, var(--purple), transparent 60%);
+    ">
+      <div class="impact">
+        <div class="big-stat gradient-text">70%</div>
+        <div class="impact-label">Reduction in<br>Streaming Bandwidth Costs</div>
+      </div>
+      <div class="impact-body">
+        <div class="impact-title" style="color:var(--purple);">Outcome</div>
+        <p>By moving video delivery onto a <strong>client-side WebTorrent mesh</strong>, Seedess cuts CDN and origin bandwidth costs by <strong>up to 70%</strong> — every additional viewer becomes a peer, so costs flatten rather than scale linearly with audience size. 4K streams run smoothly even on constrained origins.</p>
+      </div>
+    </div>
+
+    <div class="featured">
+      <div class="featured-head">
+        <div class="featured-logo s">S</div>
+        <div class="featured-title">
+          <h3>Seedess</h3>
+          <div class="url s">seedess.com · Founder &amp; Lead Engineer</div>
+        </div>
+        <div class="featured-tag s">Open Source · Production</div>
+      </div>
+      <p class="featured-desc">
+        <strong>P2P 4K video streaming over BitTorrent</strong>, delivered natively in the browser. A <strong>Node.js + Redis</strong> tracker/coordinator serves the swarm, while <strong>client-side WebTorrent</strong> turns each viewer into an active peer. Includes DLNA/UPnP Smart TV casting, a service-worker delivery layer for native <code>&lt;video&gt;</code> playback, and a custom React video player tuned for P2P seeking and buffering.
+      </p>
+
+      <div class="featured-grid">
+        <div class="feature-item s">
+          <div class="t">Hybrid BitTorrent + WebTorrent</div>
+          <div class="d">Native BitTorrent peers seed alongside browser-based WebTorrent peers via WebRTC. Single swarm, two transports — every viewer contributes upload bandwidth back.</div>
+        </div>
+        <div class="feature-item">
+          <div class="t">Node.js + Redis Backend</div>
+          <div class="d">Node.js tracker and swarm coordinator. Redis for peer state, piece availability, and real-time swarm health metrics. Scales horizontally on standard infra.</div>
+        </div>
+        <div class="feature-item s">
+          <div class="t">Service Worker Delivery</div>
+          <div class="d">Service worker intercepts <code>&lt;video&gt;</code> range requests and serves from the P2P buffer — zero-copy handoff from WebTorrent to native playback with seek support.</div>
+        </div>
+        <div class="feature-item">
+          <div class="t">DLNA / UPnP Casting</div>
+          <div class="d">Cast P2P streams directly to Smart TVs and media devices via DLNA/UPnP discovery and HTTP bridge — Chromecast-style without Google infra.</div>
+        </div>
+        <div class="feature-item s">
+          <div class="t">4K Optimization</div>
+          <div class="d">WebTorrent tuned for high-bitrate piece selection, sequential prioritization near the playhead, and adaptive fallback to origin when swarm health drops.</div>
+        </div>
+        <div class="feature-item">
+          <div class="t">Custom React Player</div>
+          <div class="d">React video player built on native HTML5 media, with P2P-aware buffering indicators, swarm stats, and graceful degradation to HTTP origin.</div>
+        </div>
+      </div>
+
+      <div class="featured-tech">
+        <div class="tech-label">Architecture &amp; Stack</div>
+        <span class="badge s">WebTorrent</span>
+        <span class="badge s">BitTorrent</span>
+        <span class="badge s">WebRTC</span>
+        <span class="badge p">Node.js</span>
+        <span class="badge p">Redis</span>
+        <span class="badge">Service Workers</span>
+        <span class="badge">DLNA / UPnP</span>
+        <span class="badge">React</span>
+        <span class="badge">HTML5 Video</span>
+        <span class="badge a">Open Source</span>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div>Gabe Lalasava · Case Studies · 2026</div>
+      <div><a href="https://seedess.com">seedess.com</a> · <a href="https://github.com/seedess">github.com/seedess</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ PAGE 4 · PROJECT GRID ═══════════ -->
+<div class="page">
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+
+  <div class="content">
+    <div class="page-header">
+      <div class="brand">gabe<span class="dot">.</span>dev</div>
+      <div class="label">More Projects · 03</div>
+    </div>
+
+    <div class="eyebrow">Selected Work</div>
+    <h2 class="section-title">More things I've <span class="gradient-text">built.</span></h2>
+    <p class="section-sub">Additional products I've founded, contributed to, or shipped as lead developer — ranging from collaborative knowledge bases to P2P video streaming and AI extensions.</p>
+
+    <div class="projects">
+
+      <div class="proj">
+        <div class="proj-head">
+          <div class="proj-logo s">H</div>
+          <div class="proj-tag s">Founder · Lead</div>
+        </div>
+        <h4>Hardroad</h4>
+        <div class="url s">hardroad.app</div>
+        <p>Cloud SaaS daily action planner with real-time sync via MQTT, offline-first architecture, and a novel relational-integrity framework from Prisma schema all the way into MobX stores on web, iOS, and Android clients.</p>
+        <div class="tech">React · React Native · Swift · MobX · MQTT · Fastify</div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-head">
+          <div class="proj-logo a">O</div>
+          <div class="proj-tag a">Founder</div>
+        </div>
+        <h4>Offmode.ai</h4>
+        <div class="url">offmode.ai</div>
+        <p>AI-powered collaborative workspace and knowledge management. Real-time editing with Yjs, vector search on pgvector, role-based access control, and AI chat assistance embedded in the workspace.</p>
+        <div class="tech">Next.js · Yjs · pgvector · OpenAI</div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-head">
+          <div class="proj-logo">N</div>
+          <div class="proj-tag">Founder</div>
+        </div>
+        <h4>NoteOn.space</h4>
+        <div class="url">noteon.space</div>
+        <p>Live team notes with an AI knowledge base. Rich editing with BlockNote, Excalidraw drawing integration, real-time collaboration via WebRTC + PartyKit, and Stripe billing for team plans.</p>
+        <div class="tech">Next.js · BlockNote · Excalidraw · PartyKit</div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-head">
+          <div class="proj-logo a">N</div>
+          <div class="proj-tag ghost">2024</div>
+        </div>
+        <h4>Nexai</h4>
+        <div class="url">nexai platform</div>
+        <p>Conversational AI platform for live support with a developer chatbot API. Achieved the fastest known in-browser semantic search using FlexSearch + semantic cache with RAG over live support docs.</p>
+        <div class="tech">LangChain · Socket.io · TensorFlow.js · Redis</div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-head">
+          <div class="proj-logo">F</div>
+          <div class="proj-tag ghost">2017</div>
+        </div>
+        <h4>Factmata</h4>
+        <div class="url">Chrome Extension</div>
+        <p>AI fact-checking Chrome extension that validates statistical accuracy of claims on webpages using NLP. React frontend with Python + HUG API backend. Early AI-meets-browser-extension work.</p>
+        <div class="tech">React · Python · NLP · Chrome Ext</div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-head">
+          <div class="proj-logo s">H</div>
+          <div class="proj-tag ghost">2018</div>
+        </div>
+        <h4>Hectare / SellMyLivestock</h4>
+        <div class="url s">hectare.com</div>
+        <p>React Native marketplace for Europe's #1 online livestock platform. Algolia-powered semantic search serving ~65,000 farmers on iOS and Android. Cross-platform mobile architecture.</p>
+        <div class="tech">React Native · Algolia · iOS · Android</div>
+      </div>
+
+    </div>
+
+    <div class="page-footer">
+      <div>Gabe Lalasava · Work Samples · 2026</div>
+      <div><a href="https://gabe.m82.ai">gabe.m82.ai</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ PAGE 5 · TECH STACK + AI AUGMENTATION ═══════════ -->
+<div class="page">
+  <div class="glow g1"></div>
+  <div class="glow g3"></div>
+
+  <div class="content">
+    <div class="page-header">
+      <div class="brand">gabe<span class="dot">.</span>dev</div>
+      <div class="label">Tech &amp; Approach · 04</div>
+    </div>
+
+    <div class="eyebrow">Tech I work with</div>
+    <h2 class="section-title">Full-stack, <span class="gradient-text">end to end.</span></h2>
+    <p class="section-sub">Comfortable across the entire stack — from React and React Native on the frontend, to Node.js and Python on the backend, to deploying on AWS, GCP, and Cloudflare.</p>
+
+    <div class="stack-cols" style="margin-bottom:14pt;">
+      <div class="stack-col">
+        <h5><span class="bullet"></span>Frontend</h5>
+        <span class="badge p">React</span>
+        <span class="badge p">React Native</span>
+        <span class="badge">Next.js</span>
+        <span class="badge">TypeScript</span>
+        <span class="badge">Tailwind</span>
+        <span class="badge">MobX</span>
+        <span class="badge">Astro</span>
+        <span class="badge">Angular</span>
+        <span class="badge">Electron</span>
+      </div>
+      <div class="stack-col s">
+        <h5><span class="bullet"></span>Backend</h5>
+        <span class="badge s">Node.js</span>
+        <span class="badge s">Python</span>
+        <span class="badge">PHP</span>
+        <span class="badge">Hono</span>
+        <span class="badge">Fastify</span>
+        <span class="badge">MQTT</span>
+        <span class="badge">WebSockets</span>
+        <span class="badge">Prisma</span>
+        <span class="badge">REST</span>
+      </div>
+      <div class="stack-col a">
+        <h5><span class="bullet"></span>AI / ML</h5>
+        <span class="badge a">LLMs</span>
+        <span class="badge a">RAG</span>
+        <span class="badge">LangChain</span>
+        <span class="badge">pgvector</span>
+        <span class="badge">Claude</span>
+        <span class="badge">OpenAI</span>
+        <span class="badge">Gemini</span>
+        <span class="badge">NLP</span>
+        <span class="badge">Semantic Search</span>
+      </div>
+      <div class="stack-col f">
+        <h5><span class="bullet"></span>Infra</h5>
+        <span class="badge">AWS</span>
+        <span class="badge">GCP</span>
+        <span class="badge">Cloudflare</span>
+        <span class="badge">Docker</span>
+        <span class="badge">Redis</span>
+        <span class="badge">PostgreSQL</span>
+        <span class="badge">Supabase</span>
+        <span class="badge">MongoDB</span>
+      </div>
+    </div>
+
+    <div class="eyebrow">Dev Process</div>
+    <h2 class="section-title" style="font-size:17pt;margin-bottom:6pt;">AI-augmented development.</h2>
+    <p class="section-sub" style="margin-bottom:12pt;">SendHub.ai and other recent projects were built with extensive use of Claude Code. Not about generating boilerplate — about having an AI pair programmer that understands the full architecture and makes informed decisions across the stack.</p>
+
+    <div class="arch-grid">
+      <div class="arch-card">
+        <div class="role">Context-Aware</div>
+        <h4>Architecture-level understanding</h4>
+        <p>Full codebase context via CLAUDE.md files documenting architecture decisions, conventions, and the multi-tenant model. New features generated with correct RLS patterns, proper error handling, and consistent API design from the start.</p>
+      </div>
+      <div class="arch-card">
+        <div class="role">Schema + Migrations</div>
+        <h4>SQL migrations with RLS policies</h4>
+        <p>Denormalized org_id/business_id columns, proper policy functions, and cascade-aware foreign keys — generated following established patterns, catching security gaps before they reach production.</p>
+      </div>
+      <div class="arch-card">
+        <div class="role">Multi-Service</div>
+        <h4>Consistency across 6+ services</h4>
+        <p>With Worker, Dashboard, Admin, Shopify App, Matrix Socket, and MCP Server deployed — type alignment across services, shared conventions, and enforcement of rules like "Client Never Delivers".</p>
+      </div>
+      <div class="arch-card">
+        <div class="role">End-to-End</div>
+        <h4>Full features in single sessions</h4>
+        <p>Semantic search KB, scheduled messaging, Shopify webhook sync, and email channel integration implemented end-to-end — migration + API + UI — in single sessions, production-ready and consistent with project conventions.</p>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top:auto;margin-bottom:10pt;">
+      <div class="label">Let's build something together</div>
+      <h3>Available for new projects</h3>
+      <p>
+        Looking for a full-stack engineer or founding engineer? I'm open to senior IC, tech lead, and founding roles working on <strong>AI-powered SaaS, real-time platforms, and developer tools</strong>. Reach out at <strong>gabe@fijiwebdesign.com</strong>.
+      </p>
+    </div>
+
+    <div class="page-footer">
+      <div>Gabe Lalasava · San Diego, CA</div>
+      <div><a href="mailto:gabe@fijiwebdesign.com">gabe@fijiwebdesign.com</a> · <a href="https://gabe.m82.ai">gabe.m82.ai</a></div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

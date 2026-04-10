@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Gabe Lalasava — Resume</title>
+<style>
+  @page { size: Letter; margin: 0; }
+  :root {
+    --bg: #0c0e1a;
+    --bg-2: #151829;
+    --bg-3: #1d2236;
+    --border: #262b44;
+    --text: #e6e8f0;
+    --muted: #9096b3;
+    --faint: #6a6f8a;
+    --green: oklch(0.72 0.19 155);
+    --purple: oklch(0.65 0.15 260);
+    --accent: oklch(0.72 0.19 45);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
+    font-size: 9pt;
+    line-height: 1.4;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page {
+    width: 8.5in;
+    height: 11in;
+    padding: 0.42in 0.5in;
+    display: grid;
+    grid-template-columns: 2.25in 1fr;
+    gap: 0.3in;
+    position: relative;
+    overflow: hidden;
+  }
+  .glow {
+    position: absolute;
+    width: 5in; height: 5in;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.14;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .glow.g1 { background: var(--green); top: -2in; left: -1.5in; }
+  .glow.g2 { background: var(--purple); bottom: -2in; right: -1.5in; }
+  .sidebar, .main { position: relative; z-index: 1; }
+
+  .gradient-text {
+    background: linear-gradient(135deg, var(--green), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .name {
+    font-size: 24pt;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 4pt;
+  }
+  .title {
+    font-size: 9pt;
+    color: var(--muted);
+    margin-bottom: 14pt;
+    line-height: 1.35;
+  }
+  .title strong { color: var(--text); font-weight: 600; }
+
+  .sidebar h3 {
+    font-size: 7pt;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-weight: 700;
+    color: var(--green);
+    margin-bottom: 5pt;
+    margin-top: 11pt;
+  }
+  .sidebar h3:first-of-type { margin-top: 0; }
+
+  .contact { display: flex; flex-direction: column; gap: 5pt; }
+  .contact a, .contact span {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 8.5pt;
+    display: flex;
+    align-items: center;
+    gap: 6pt;
+    word-break: break-all;
+  }
+  .contact .dot {
+    width: 5pt; height: 5pt; border-radius: 50%;
+    background: var(--green);
+    flex-shrink: 0;
+  }
+  .contact .dot.p { background: var(--purple); }
+  .contact .dot.a { background: var(--accent); }
+
+  .stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5pt;
+  }
+  .stat {
+    background: var(--bg-2);
+    border: 0.5pt solid var(--border);
+    border-radius: 8pt;
+    padding: 7pt 6pt;
+    text-align: center;
+  }
+  .stat .n {
+    font-size: 15pt;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .stat .l {
+    font-size: 6.5pt;
+    color: var(--faint);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 3pt;
+  }
+
+  .skill-group { margin-bottom: 8pt; }
+  .skill-group .label {
+    font-size: 7.5pt;
+    color: var(--text);
+    font-weight: 600;
+    margin-bottom: 3pt;
+  }
+  .badges { display: flex; flex-wrap: wrap; gap: 3pt; }
+  .badge {
+    font-size: 7pt;
+    padding: 2pt 5pt;
+    border-radius: 99pt;
+    background: var(--bg-3);
+    border: 0.5pt solid var(--border);
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .badge.p { border-color: color-mix(in oklch, var(--green), transparent 60%); color: var(--green); }
+  .badge.s { border-color: color-mix(in oklch, var(--purple), transparent 60%); color: var(--purple); }
+
+  /* Main column */
+  .main h2 {
+    font-size: 7.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: 700;
+    color: var(--green);
+    margin-bottom: 5pt;
+    margin-top: 10pt;
+  }
+  .main h2:first-child { margin-top: 0; }
+
+  .summary {
+    color: var(--muted);
+    font-size: 9pt;
+    line-height: 1.55;
+    margin-bottom: 2pt;
+  }
+  .summary strong { color: var(--text); }
+
+  .job {
+    margin-bottom: 6pt;
+    padding-left: 10pt;
+    border-left: 1.5pt solid var(--bg-3);
+    position: relative;
+  }
+  .job::before {
+    content: '';
+    position: absolute;
+    left: -3.25pt; top: 3pt;
+    width: 5pt; height: 5pt;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 0 2pt color-mix(in oklch, var(--green), transparent 80%);
+  }
+  .job.s::before { background: var(--purple); box-shadow: 0 0 0 2pt color-mix(in oklch, var(--purple), transparent 80%); }
+  .job.a::before { background: var(--accent); box-shadow: 0 0 0 2pt color-mix(in oklch, var(--accent), transparent 80%); }
+  .job.f::before { background: var(--faint); box-shadow: 0 0 0 2pt color-mix(in oklch, var(--faint), transparent 80%); }
+
+  .job-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8pt;
+    margin-bottom: 1pt;
+  }
+  .job-title { font-size: 9pt; font-weight: 700; color: var(--text); }
+  .job-date {
+    font-size: 7.5pt;
+    color: var(--faint);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .job-co { font-size: 8.5pt; color: var(--muted); margin-bottom: 3pt; }
+  .job ul { list-style: none; padding: 0; }
+  .job li {
+    font-size: 8pt;
+    color: var(--muted);
+    padding-left: 9pt;
+    position: relative;
+    line-height: 1.4;
+    margin-bottom: 0.5pt;
+  }
+  .job li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--green);
+    font-size: 7pt;
+    top: 1pt;
+  }
+  .job.s li::before { color: var(--purple); }
+  .job.a li::before { color: var(--accent); }
+  .job.f li::before { color: var(--faint); }
+
+  .projects {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5pt;
+  }
+  .proj {
+    background: var(--bg-2);
+    border: 0.5pt solid var(--border);
+    border-radius: 7pt;
+    padding: 6pt 7pt;
+  }
+  .proj-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 5pt;
+    margin-bottom: 2pt;
+  }
+  .proj-name { font-size: 9pt; font-weight: 700; color: var(--text); }
+  .proj-tag {
+    font-size: 6.5pt;
+    color: var(--green);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+  }
+  .proj-tag.s { color: var(--purple); }
+  .proj-desc {
+    font-size: 7.5pt;
+    color: var(--muted);
+    line-height: 1.4;
+    margin-bottom: 3pt;
+  }
+  .proj-tech {
+    font-size: 6.5pt;
+    color: var(--faint);
+    font-family: ui-monospace, monospace;
+  }
+
+  .page-2 {
+    page-break-before: always;
+    break-before: page;
+  }
+  .page.page-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .divider {
+    height: 1pt;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 8pt 0;
+  }
+
+  .footer-note {
+    margin-top: 14pt;
+    padding-top: 8pt;
+    border-top: 0.5pt solid var(--border);
+    font-size: 7pt;
+    color: var(--faint);
+    text-align: center;
+  }
+  .footer-note a { color: var(--green); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+
+  <aside class="sidebar">
+    <div class="name">Gabe<span class="gradient-text">.</span></div>
+    <div class="name gradient-text" style="font-size:14pt;margin-top:-2pt;margin-bottom:6pt;">Lalasava</div>
+    <div class="title"><strong>Full-Stack Developer &amp; Founder</strong><br>20+ years building AI-powered SaaS, real-time platforms &amp; mobile apps.</div>
+
+    <h3>Contact</h3>
+    <div class="contact">
+      <a href="mailto:gabe@fijiwebdesign.com"><span class="dot"></span>gabe@fijiwebdesign.com</a>
+      <a href="https://gabe.m82.ai"><span class="dot p"></span>gabe.m82.ai</a>
+      <a href="https://linkedin.com/in/bucabay"><span class="dot a"></span>linkedin.com/in/bucabay</a>
+      <a href="https://github.com/fijiwebdesign"><span class="dot"></span>github.com/fijiwebdesign</a>
+      <span><span class="dot p"></span>San Diego, CA</span>
+    </div>
+
+    <h3>At a Glance</h3>
+    <div class="stats">
+      <div class="stat"><div class="n gradient-text">20+</div><div class="l">Yrs Dev</div></div>
+      <div class="stat"><div class="n gradient-text">10+</div><div class="l">Yrs React</div></div>
+      <div class="stat"><div class="n gradient-text">12+</div><div class="l">Yrs Node</div></div>
+      <div class="stat"><div class="n gradient-text">4×</div><div class="l">Founder</div></div>
+    </div>
+
+    <h3>Frontend</h3>
+    <div class="badges">
+      <span class="badge p">React</span>
+      <span class="badge p">React Native</span>
+      <span class="badge">Next.js</span>
+      <span class="badge">TypeScript</span>
+      <span class="badge">Tailwind</span>
+      <span class="badge">MobX</span>
+      <span class="badge">Astro</span>
+      <span class="badge">Angular</span>
+      <span class="badge">Electron</span>
+    </div>
+
+    <h3>Backend</h3>
+    <div class="badges">
+      <span class="badge s">Node.js</span>
+      <span class="badge s">Python</span>
+      <span class="badge">PHP</span>
+      <span class="badge">Hono</span>
+      <span class="badge">Fastify</span>
+      <span class="badge">MQTT</span>
+      <span class="badge">WebSockets</span>
+      <span class="badge">Prisma</span>
+    </div>
+
+    <h3>AI / ML</h3>
+    <div class="badges">
+      <span class="badge p">LLMs</span>
+      <span class="badge p">RAG</span>
+      <span class="badge">LangChain</span>
+      <span class="badge">pgvector</span>
+      <span class="badge">Claude</span>
+      <span class="badge">OpenAI</span>
+      <span class="badge">Gemini</span>
+      <span class="badge">NLP</span>
+      <span class="badge">Semantic Search</span>
+    </div>
+
+    <h3>Infra</h3>
+    <div class="badges">
+      <span class="badge s">AWS</span>
+      <span class="badge s">GCP</span>
+      <span class="badge s">Cloudflare</span>
+      <span class="badge">Docker</span>
+      <span class="badge">Redis</span>
+      <span class="badge">PostgreSQL</span>
+      <span class="badge">Supabase</span>
+      <span class="badge">MongoDB</span>
+    </div>
+  </aside>
+
+  <main class="main">
+    <h2>Summary</h2>
+    <p class="summary">
+      Full-stack developer &amp; founder building real-time, AI-augmented web and mobile applications. Led cross-functional teams, founded <strong>4 companies</strong>, and shipped products used by tens of thousands. Current focus: AI-powered business tools, productivity platforms, and collaborative software. Experienced augmenting teams with AI for development, testing, deployment, documentation, and end-to-end automation.
+    </p>
+
+    <h2>Experience</h2>
+
+    <div class="job">
+      <div class="job-head">
+        <div class="job-title">Lead React / React-Native / Node.js Developer</div>
+        <div class="job-date">Sep 2018 – Present</div>
+      </div>
+      <div class="job-co">Hardroad · San Diego, CA</div>
+      <ul>
+        <li>Cross-functional team lead for a cloud-based SaaS productivity platform with real-time sync</li>
+        <li>Built real-time E2E reactive architecture with MobX, MQTT, and Redis</li>
+        <li>Developed novel relational-integrity framework from API to UI using Prisma + ZenStack</li>
+        <li>Automated deployment and scaling on Google Cloud Run</li>
+      </ul>
+    </div>
+
+    <div class="job s">
+      <div class="job-head">
+        <div class="job-title">Conversational AI Developer</div>
+        <div class="job-date">May 2024 – Jun 2024</div>
+      </div>
+      <div class="job-co">Nexai · Remote</div>
+      <ul>
+        <li>Built AI chat platform with LLM, semantic search, and RAG for live customer support</li>
+        <li>Achieved fastest known in-browser semantic search using FlexSearch + semantic cache</li>
+      </ul>
+    </div>
+
+    <div class="job a">
+      <div class="job-head">
+        <div class="job-title">React-Native Mobile Developer</div>
+        <div class="job-date">Jun 2018 – Sep 2018</div>
+      </div>
+      <div class="job-co">Hectare · Remote</div>
+      <ul>
+        <li>Developed React Native marketplace for Europe's #1 livestock platform</li>
+        <li>Semantic search with Algolia, serving ~65K farmers on iOS and Android</li>
+      </ul>
+    </div>
+
+    <div class="job f">
+      <div class="job-head">
+        <div class="job-title">Mentor — Angular, React &amp; Node.js</div>
+        <div class="job-date">Feb 2016 – Mar 2018</div>
+      </div>
+      <div class="job-co">Thinkful · Miami, FL</div>
+      <ul>
+        <li>Mentored developers on full-stack web tech: Node.js, Angular, React, JS fundamentals</li>
+      </ul>
+    </div>
+
+    <div class="job f">
+      <div class="job-head">
+        <div class="job-title">Principal Angular UI Developer</div>
+        <div class="job-date">Jan 2014 – Dec 2015</div>
+      </div>
+      <div class="job-co">HP · Florida</div>
+      <ul>
+        <li>Redeveloped UI of HP's TorQue Cloud Server Automation Software</li>
+        <li>Built with Angular.js, Node.js, jQuery, Bootstrap, LESS, and CoffeeScript</li>
+      </ul>
+    </div>
+
+    <div class="job f">
+      <div class="job-head">
+        <div class="job-title">PHP Developer</div>
+        <div class="job-date">Jun 2011 – Nov 2011</div>
+      </div>
+      <div class="job-co">Walt Disney Internet Group · Orlando, FL</div>
+      <ul>
+        <li>E-commerce development for disney.com with Zend Framework</li>
+        <li>BDD methodology, PHPUnit 98% coverage, JBehave/Selenium testing</li>
+      </ul>
+    </div>
+
+    <div class="job f">
+      <div class="job-head">
+        <div class="job-title">Lead PHP Developer</div>
+        <div class="job-date">Jan 2010 – Jul 2010</div>
+      </div>
+      <div class="job-co">Brilliance, LLC · West Palm Beach, FL</div>
+      <ul>
+        <li>Multi-server e-commerce platform with 70,000+ products</li>
+        <li>Apache Solr faceted search and diamond recommendation algorithms</li>
+      </ul>
+    </div>
+
+    <div class="job f">
+      <div class="job-head">
+        <div class="job-title">Founder &amp; PHP Developer</div>
+        <div class="job-date">Jan 2003 – Dec 2010</div>
+      </div>
+      <div class="job-co">Fiji Web Design · Florida</div>
+      <ul>
+        <li>Founded web agency — clients included US GlobalChange.gov, Formula1 Corporate</li>
+        <li>Commercial &amp; open-source Joomla products, IM systems, geocoding</li>
+        <li>Server deployment, custom JS/PHP frameworks, SOAP/REST integrations</li>
+      </ul>
+    </div>
+  </main>
+</div>
+
+<div class="page page-2">
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+  <main class="main" style="grid-column: 1 / -1;">
+    <h2>Selected Projects</h2>
+    <div class="projects">
+
+      <div class="proj">
+        <div class="proj-head">
+          <div class="proj-name">SendHub.ai</div>
+          <div class="proj-tag">Founder</div>
+        </div>
+        <div class="proj-desc">AI-powered WhatsApp messaging for businesses. Unified inbox with AI auto-replies, team collaboration, Shopify integration, multi-tenant via WhatsApp Business API + Matrix bridge.</div>
+        <div class="proj-tech">React · Hono · CF Workers · Supabase · Gemini · MCP</div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-head">
+          <div class="proj-name">Hardroad</div>
+          <div class="proj-tag s">Founder · Lead</div>
+        </div>
+        <div class="proj-desc">Cloud SaaS daily action planner. Real-time sync across devices via MQTT, offline-first architecture, relational integrity from UI to DB, and AI-powered coaching.</div>
+        <div class="proj-tech">React · React Native · MobX · Fastify · MQTT · Swift</div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-head">
+          <div class="proj-name">Offmode.ai</div>
+          <div class="proj-tag">Founder</div>
+        </div>
+        <div class="proj-desc">AI-powered collaborative workspace and knowledge management. Real-time editing with Yjs, vector search, RBAC, and AI chat assistance.</div>
+        <div class="proj-tech">Next.js · Yjs · pgvector · OpenAI</div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-head">
+          <div class="proj-name">NoteOn.space</div>
+          <div class="proj-tag">Founder</div>
+        </div>
+        <div class="proj-desc">Live team notes with AI knowledge base. Rich editing with BlockNote, Excalidraw drawing, real-time collaboration via WebRTC, and Stripe billing.</div>
+        <div class="proj-tech">Next.js · BlockNote · Excalidraw · PartyKit</div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-head">
+          <div class="proj-name">Seedess</div>
+          <div class="proj-tag s">Open Source</div>
+        </div>
+        <div class="proj-desc">P2P 4K video streaming on BitTorrent. WebTorrent optimizations, DLNA/UPnP Smart TV casting, service worker delivery, and React video player.</div>
+        <div class="proj-tech">WebTorrent · BitTorrent · DLNA · React</div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-head">
+          <div class="proj-name">Nexai</div>
+          <div class="proj-tag s">2024</div>
+        </div>
+        <div class="proj-desc">Conversational AI platform for live support with developer chatbot API. Fastest known in-browser semantic search using FlexSearch + semantic cache.</div>
+        <div class="proj-tech">LangChain · Socket.io · TensorFlow.js · Redis</div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-head">
+          <div class="proj-name">Factmata</div>
+          <div class="proj-tag">2017</div>
+        </div>
+        <div class="proj-desc">AI fact-checking Chrome extension validating statistical accuracy of webpage claims using NLP. React frontend with Python + HUG API backend.</div>
+        <div class="proj-tech">React · Python · NLP · Chrome Ext</div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-head">
+          <div class="proj-name">Hectare / SellMyLivestock</div>
+          <div class="proj-tag s">2018</div>
+        </div>
+        <div class="proj-desc">React Native marketplace for Europe's #1 online livestock platform. Algolia-powered semantic search serving ~65K farmers on iOS and Android.</div>
+        <div class="proj-tech">React Native · Algolia · iOS · Android</div>
+      </div>
+
+    </div>
+
+    <h2>Highlights</h2>
+    <div class="job">
+      <ul>
+        <li><strong style="color:var(--text)">4× Founder</strong> — SendHub.ai, Hardroad, Offmode.ai, NoteOn.space, plus Fiji Web Design agency</li>
+        <li><strong style="color:var(--text)">AI Augmentation</strong> — deep experience using LLMs for dev, testing, deployment, documentation, and end-to-end automation</li>
+        <li><strong style="color:var(--text)">Real-Time Systems</strong> — MQTT, WebSockets, Yjs, WebRTC, MobX reactive architectures</li>
+        <li><strong style="color:var(--text)">Full-Stack Ownership</strong> — from iOS/Android/React frontends through Node/Python APIs to AWS/GCP/Cloudflare deployments</li>
+        <li><strong style="color:var(--text)">Team Leadership</strong> — cross-functional team lead, mentor, and technical founder across multiple ventures</li>
+      </ul>
+    </div>
+
+    <div class="footer-note">
+      Gabe Lalasava · <a href="https://gabe.m82.ai">gabe.m82.ai</a> · <a href="mailto:gabe@fijiwebdesign.com">gabe@fijiwebdesign.com</a> · San Diego, CA
+    </div>
+  </main>
+</div>
+
+</body>
+</html>
